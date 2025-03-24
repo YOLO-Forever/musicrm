@@ -1,58 +1,33 @@
 package com._1.musicrm.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
+import org.antlr.v4.runtime.misc.NotNull;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/MusicAppDB";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "password";
+    @NotBlank(message = "邮箱不能为空")
+    @Email(message = "邮箱格式不正确")
+    private String email;
 
-    public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("欢迎注册音乐软件");
-            System.out.print("请输入用户名：");
-            String username = scanner.nextLine();
+    @NotBlank(message = "密码不能为空")
+    private String password;
 
-            System.out.print("请输入密码：");
-            String password = scanner.nextLine();
-
-            if (registerUser(username, password)) {
-                System.out.println("注册成功！");
-            } else {
-                System.out.println("用户名已存在，注册失败。");
-            }
-        }
-    }
-
-    private static boolean registerUser(String username, String password) {
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-            String checkUserSql = "SELECT COUNT(*) FROM users WHERE username = ?";
-            try (PreparedStatement checkStmt = conn.prepareStatement(checkUserSql)) {
-                checkStmt.setString(1, username);
-                try (ResultSet rs = checkStmt.executeQuery()) {
-                    if (rs.next() && rs.getInt(1) > 0) {
-                        return false;
-                    }
-                }
-            }
-
-            String insertUserSql = "INSERT INTO users (username, password) VALUES (?, ?)";
-            try (PreparedStatement insertStmt = conn.prepareStatement(insertUserSql)) {
-                insertStmt.setString(1, username);
-                insertStmt.setString(2, password);
-                insertStmt.executeUpdate();
-            }
-
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+    // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }

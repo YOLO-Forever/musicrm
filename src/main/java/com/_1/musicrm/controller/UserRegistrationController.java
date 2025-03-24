@@ -1,37 +1,38 @@
-package com._1.musicrm.User.java
+package com._1.musicrm.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com._1.musicrm.model.User;
+import com._1.musicrm.service.UserService;
+import com._1.musicrm.exception.DuplicateEmailException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-public class MyController {
+@RequestMapping("/api/auth")
+public class UserRegistrationController {
 
-    // 定义一个路由来获取消息
-    @GetMapping("/message")
-    public String getMessage(@RequestParam(name = "name", defaultValue = "World") String name) {
-        return "Hello, " + name + "!";
+    private final UserService userService;
+
+    public UserRegistrationController(UserService userService) {
+        this.userService = userService;
     }
 
-    // 定义一个路由来提交表单数据
-    @PostMapping("/form")
-    public String submitForm(@RequestBody User user) {
-        // 处理用户提交的数据
-        return "Form submitted with username: " + user.getUsername();
-    }
-
-    // 定义一个内部类来表示用户
-    public static class User {
-        private String username;
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+        try {
+            User registeredUser = userService.registerUser(user);
+            
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "注册成功");
+            response.put("email", registeredUser.getEmail());
+            
+            return ResponseEntity.ok().body(response);
+        } catch (DuplicateEmailException ex) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", ex.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
         }
     }
 }
