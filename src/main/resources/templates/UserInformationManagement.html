@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>用户信息管理</h2>
+
+        <!-- 上传头像 -->
+        <form method="post" action="/api/auth/upload-avatar" enctype="multipart/form-data">
+            <label>上传头像：</label>
+            <input type="file" name="avatar" accept="image/*" required>
+            <button type="submit">上传</button>
+        </form>
+
+        <!-- 更新个人信息 -->
+        <form method="post" action="/api/auth/update-profile">
+            <label>用户名：</label>
+            <input type="text" name="username" placeholder="输入新用户名" required>
+            <label>电话：</label>
+            <input type="tel" name="phone" placeholder="输入电话号码">
+            <button type="submit">更新信息</button>
+        </form>
+
+        <!-- 更改密码 -->
+        <form method="post" action="/api/auth/change-password">
+            <label>当前密码：</label>
+            <input type="password" name="currentPassword" required>
+            <label>新密码：</label>
+            <input type="password" name="newPassword" required>
+            <button type="submit">更改密码</button>
+        </form>
+
+        <!-- 显示错误信息 -->
+        <div th:if="${param.error}" class="error">
+            <p th:text="${param.error[0]}"></p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .left {
+            flex: 1;
+            background: url('https://source.unsplash.com/random/800x600') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .left h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: #f8f9fa;
+            padding: 40px;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .form-container h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #eee;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #23233c;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background: #1a1a2e;
+        }
+        .already {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .already a {
+            color: #23233c;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h2>Hey, you can take this screen UI, CSS, Swift and Android code for free</h2>
+        </div>
+        <div class="right">
+            <div class="form-container">
+                <h1>Register your account</h1>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="Please enter your email">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Please enter your password">
+                </div>
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <input type="password" placeholder="Confirm your password">
+                </div>
+                <button class="submit-btn">Submit</button>
+                <p class="already">Already Registered? <a href="#">Login</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
